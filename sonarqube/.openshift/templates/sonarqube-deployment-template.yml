@@ -15,12 +15,17 @@ objects:
   kind: PersistentVolumeClaim
   metadata:
     name: sonarqube-data
+    labels:
+      billingType: hourly
+      failure-domain.beta.kubernetes.io/region: us-east
+      failure-domain.beta.kubernetes.io/zone: wdc07
   spec:
     accessModes:
     - ReadWriteOnce
     resources:
       requests:
         storage: ${SONARQUBE_PERSISTENT_VOLUME_SIZE}
+    storageClassName: ibmc-file-bronze
   status: {}
 - apiVersion: v1
   kind: DeploymentConfig

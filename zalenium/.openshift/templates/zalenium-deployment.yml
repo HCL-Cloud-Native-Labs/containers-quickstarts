@@ -13,10 +13,10 @@ objects:
   metadata:
     name: zalenium-role
   rules:
-  - verbs: ['create','list','get','delete','watch']         
+  - verbs: ['create','list','get','delete','watch']
     resources: ['pods']
-  - verbs: ['create', 'get']         
-    resources: ['pods/exec']    
+  - verbs: ['create', 'get']
+    resources: ['pods/exec']
 
 - apiVersion: v1
   kind: ServiceAccount
@@ -32,7 +32,7 @@ objects:
     name: zalenium-role
   subjects:
   - kind: ServiceAccount
-    name: zalenium            
+    name: zalenium
 
 - apiVersion: v1
   kind: Service
@@ -120,7 +120,7 @@ objects:
                 protocol: TCP
             volumeMounts:
               - name: zalenium-videos
-                mountPath: /home/seluser/videos  
+                mountPath: /home/seluser/videos
         volumes:
             - name: zalenium-videos
               persistentVolumeClaim:
@@ -144,12 +144,17 @@ objects:
   kind: PersistentVolumeClaim
   metadata:
     name: zalenium-videos
+    labels:
+      billingType: hourly
+      failure-domain.beta.kubernetes.io/region: us-east
+      failure-domain.beta.kubernetes.io/zone: wdc07
   spec:
     accessModes:
       - ReadWriteOnce
     resources:
       requests:
         storage: ${VIDEOS_STORAGE_SIZE}
+    storageClassName: ibmc-file-bronze
 
 parameters:
 - name: ZALENIUM_MEMORY_REQUEST
@@ -242,7 +247,7 @@ parameters:
   value: "false"
 - name: RETENTION_PERIOD
   required: true
-  description: Number of day's a testentry should be kept in dashboard before cleanup. Note, You need to manually push the Cleanup button or create a cronjob 
+  description: Number of day's a testentry should be kept in dashboard before cleanup. Note, You need to manually push the Cleanup button or create a cronjob
   value: "3"
 - name: CONTEXT_PATH
   required: true
