@@ -146,7 +146,7 @@ objects:
     name: zalenium-videos
   spec:
     accessModes:
-      - ReadWriteOnce
+      - ReadWriteMany
     resources:
       requests:
         storage: ${VIDEOS_STORAGE_SIZE}

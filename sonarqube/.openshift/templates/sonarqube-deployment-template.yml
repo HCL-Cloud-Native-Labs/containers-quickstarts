@@ -17,7 +17,7 @@ objects:
     name: sonarqube-data
   spec:
     accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
     resources:
       requests:
         storage: ${SONARQUBE_PERSISTENT_VOLUME_SIZE}
